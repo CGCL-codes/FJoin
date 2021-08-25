@@ -1,0 +1,89 @@
+
+void cpu_join(
+    const unsigned int r_stream_length, 
+    const unsigned int s_stream_length, 
+    const unsigned int r_window_length, 
+    const unsigned int s_window_length, 
+    const unsigned int r_stream_result_max, 
+    const unsigned int s_stream_result_max,
+    const unsigned int window_in_ms,
+    ResultTuple *      r_stream_result,
+    const RTuple *     r_stream,
+    InfoTuple *        r_stream_info,
+    const STuple *     s_window,
+    ResultTuple *      s_stream_result,
+    const STuple *     s_stream,
+    InfoTuple *        s_stream_info,
+    const RTuple *     r_window
+) 
+{
+	int stream_latitude = 0;
+    int stream_longtitude = 0;
+    long long stream_timestamp = 0;
+	int window_latitude = 0;
+    int window_longtitude = 0;
+    long long  window_timestamp = 0;
+
+	int r_result_index = 0;
+	bool r_stop_join = false;
+    int s_result_index = 0;
+	bool s_stop_join = false;
+	for (int i = 0; i < r_stream_length; i++) {
+		stream_latitude = r_stream[i].latitude;
+        stream_longtitude = r_stream[i].longtitude;
+        stream_timestamp = r_stream[i].timestamp;
+	for (int j = 0; j < s_window_length; j++) {
+        window_latitude = s_window[j].latitude;
+        window_longtitude = s_window[j].longtitude;
+        window_timestamp = s_window[j].timestamp;
+	    if(r_stop_join);
+	    else{
+            if(abs(stream_latitude - window_latitude) + abs(stream_longtitude - window_longtitude) < 1000)
+            if(stream_timestamp > window_timestamp && (stream_timestamp - window_timestamp) <= window_in_ms){
+                r_stream_result[r_result_index].stream_latitude   = stream_latitude;
+                r_stream_result[r_result_index].stream_longtitude = stream_longtitude;
+                r_stream_result[r_result_index].stream_timestamp  = stream_timestamp;
+                r_stream_result[r_result_index].window_latitude   = window_latitude;
+                r_stream_result[r_result_index].window_longtitude = window_longtitude;
+                r_stream_result[r_result_index].window_timestamp  = window_timestamp;
+                r_result_index++;
+            } 
+            if(r_result_index >= r_stream_result_max) r_stop_join = true;
+	    }
+	}}
+ 	for (int i = 0; i < s_stream_length; i++) {
+		stream_latitude = s_stream[i].latitude;
+        stream_longtitude = s_stream[i].longtitude;
+        stream_timestamp = s_stream[i].timestamp;
+	for (int j = 0; j < r_window_length; j++) {
+        window_latitude = r_window[j].latitude;
+        window_longtitude = r_window[j].longtitude;
+        window_timestamp = r_window[j].timestamp;
+	    if(s_stop_join);
+	    else{
+            if(abs(stream_latitude - window_latitude) + abs(stream_longtitude - window_longtitude) < 1000)
+            if(stream_timestamp > window_timestamp && (stream_timestamp - window_timestamp) <= window_in_ms){
+                s_stream_result[s_result_index].stream_latitude   = stream_latitude;
+                s_stream_result[s_result_index].stream_longtitude = stream_longtitude;
+                s_stream_result[s_result_index].stream_timestamp  = stream_timestamp;
+                s_stream_result[s_result_index].window_latitude   = window_latitude;
+                s_stream_result[s_result_index].window_longtitude = window_longtitude;
+                s_stream_result[s_result_index].window_timestamp  = window_timestamp;
+                s_result_index++;
+            } 
+			if(s_result_index >= s_stream_result_max) s_stop_join = true;
+	    }
+	}}  
+    r_stream_info[0].data[0] = r_result_index;
+    s_stream_info[0].data[0] = s_result_index;
+}
+
+
+cpu_join(
+    r_stream_length, s_stream_length, r_window_length, s_window_length, 
+    r_stream_result_max, s_stream_result_max, window_in_ms,
+    &(*pResultArray[flag][_r_])[0],&rWindow[rStreamVernier],
+    &(*pInfoArray[flag][_r_])[0],&sWindow[sWindowStartAlign],
+    &(*pResultArray[flag][_s_])[0],&sWindow[sStreamVernier],
+    &(*pInfoArray[flag][_s_])[0],&rWindow[rWindowStartAlign]
+);
