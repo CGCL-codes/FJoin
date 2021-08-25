@@ -25,6 +25,24 @@ The structure of the basic join unit is shown in the picture, which contains the
 
 # How to use?
 
+## Prerequisites
+### Hardware
+This project works on [Xilinx U280 Data Center Accelerator card](https://www.xilinx.com/products/boards-and-kits/alveo/u280.html).  
+
+You can also use other FPGA acceleration devices, such as U250, just set it accordingly.
+
+### Operation System
+Ubuntu 18.04 LTS
+
+### Software
+[Vitis 2019.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis/2019-2.html)
+
+[U280 Package File on Vitis 2019.2](https://www.xilinx.com/products/boards-and-kits/alveo/u280.html#gettingStarted)
+
+## Environment
+In order to compile and run the project, you need to configure the environment according to the following documents.
+https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vhc1571429852245.html
+
 # Evaluation Result
 <img src="https://github.com/Leomrlin/FJoin/blob/main/images/FJoin_img_evaluation.PNG" alt="FJoin_img_evaluation"/><br/>
 The direct manifestation of processing capacity of the stream join system is number of join calculations completed per unit of time. The picture on the left is a real-time comparison of the number of join calculations completed per second between FJoin and the distributed stream join system BiStream. We use the data set of Didi Chuxing and the corresponding join predicate, the sliding time window size is set to 180 seconds. The results show that FJoin with 1024 basic join units can complete more than 100 billion join predicate calculations per second. However, BiStream which runs in a 40-node cluster with 512 CPUs completes join predicate calculations about 6 billion times per second. From the perspective of connection predicate calculations, FJoin achieves a speedup of about 17.  
