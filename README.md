@@ -11,8 +11,8 @@ FJoin is an FPGA-based parallel accelerator for stream which leverages a large n
 # How to use?
 
 # Evaluation Result
-![image](FJoin/images/FJoin_img_evaluation1.PNG)
-![image](FJoin/images/FJoin_img_evaluation2.PNG)
+![image](https://github.com/Leomrlin/FJoin/edit/main/images/FJoin_img_evaluation.PNG)
+
 # Publication
 If you want to know more detailed information, please refer to this paper:  
 The paper is being reviewed by Sci Sin Inform.
