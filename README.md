@@ -60,7 +60,7 @@ The picture on the right compares the real-time throughput between FJoin and BiS
 
 # Publication
 If you want to know more detailed information, please refer to this paper:  
-The paper is being reviewed by Sci Sin Inform.
+Lin L T, Chen H H, Hai J. FJoin: an FPGA-based parallel accelerator for stream join (in Chinese). Sci Sin Inform
 
 # Authors and Copyright
 FJoin is developed in National Engineering Research Center for Big Data Technology and System, Cluster and Grid Computing Lab, Services Computing Technology and System Lab, School of Computer Science and Technology, Huazhong University of Science and Technology, Wuhan, China by Litao Lin (litaolin@hust.edu.cn), Hanhua Chen (chen@hust.edu.cn), Hai Jin (hjin@hust.edu.cn).
