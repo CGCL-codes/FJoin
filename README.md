@@ -43,7 +43,7 @@ Ubuntu 18.04 LTS
 To compile and run the project, you need to configure the environment according to the following documents.
 https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vhc1571429852245.html
 
-## Build Project
+## Build and Run Project
 After running Vitis, please set up a workspace, and then import the project from the zip file in the /proj directory. All source code and project configuration are included in it.
 
 After that, select the "Hardware" target in the left down corner, and press the hammer button to build it. Please wait patiently for hours. The sample project is set to each join pipeline contains 16 basic join units, including a total of 32 units. Generally, the building time will not be too long.  
