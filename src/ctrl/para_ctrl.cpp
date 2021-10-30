@@ -1,20 +1,20 @@
 
 #include"../head.hpp"
 
-string R_NAME = "ip1"; //R_NAME
-string R_DATA = "/home/llt/workspace2/data/ip_0101"; //R_DATA
-string S_NAME = "ip2"; //S_NAME
-string S_DATA = "/home/llt/workspace2/data/ip_1201"; //S_DATA
-string W_NAME = "/home/llt/workspace2/join_hw/src/result/result_lines"; //W_NAME
+string R_NAME;
+string R_DATA;
+string S_NAME;
+string S_DATA;
+string W_NAME;
 //设定的默认参数
-string R_PUNC = ","; //R_PUNC
-string S_PUNC = ","; //S_PUNC
-string W_PUNC = ","; //W_PUNC
+string R_PUNC;
+string S_PUNC;
+string W_PUNC;
 
 void ParaCtrlThread(int threadid) {
     //读取配置文件进行初始化配置
     //cout<<"input config source:"<<endl;
-    string cfg_filename = "/home/llt/workspace2/join_hw/src/run.cfg";
+    string cfg_filename = "run.cfg";
     //cin >> cfg_filename;
     ifstream cfg(cfg_filename.c_str());
     if(!cfg.good()){
@@ -37,25 +37,26 @@ void ParaCtrlThread(int threadid) {
         if (cfg.eof()) break; // 文件结束判断
         if(string::npos !=temp.find("end")) {break;}
 
-        if(string::npos !=temp.find("R_NAME")) {R_NAME = temp.substr(temp.find(":")+1);}
-        if(string::npos !=temp.find("R_DATA")) {R_DATA = temp.substr(temp.find(":")+1);}
-        if(string::npos !=temp.find("S_NAME")) {S_NAME = temp.substr(temp.find(":")+1);}
-        if(string::npos !=temp.find("S_DATA")) {S_DATA = temp.substr(temp.find(":")+1);}
-        if(string::npos !=temp.find("W_NAME")) {W_NAME = temp.substr(temp.find(":")+1);}
+        unsigned int start = temp.find(":")+1;
+        if(string::npos !=temp.find("R_NAME")) {R_NAME = temp.substr(start,temp.size()- start - 1);}
+        if(string::npos !=temp.find("R_DATA")) {R_DATA = temp.substr(start,temp.size()- start - 1);}
+        if(string::npos !=temp.find("S_NAME")) {S_NAME = temp.substr(start,temp.size()- start - 1);}
+        if(string::npos !=temp.find("S_DATA")) {S_DATA = temp.substr(start,temp.size()- start - 1);}
+        if(string::npos !=temp.find("W_NAME")) {W_NAME = temp.substr(start,temp.size()- start - 1);}
 
-        if(string::npos !=temp.find("R_PUNC")) {R_PUNC = temp.substr(temp.find(":")+1);}
-        if(string::npos !=temp.find("S_PUNC")) {S_PUNC = temp.substr(temp.find(":")+1);}
-        if(string::npos !=temp.find("W_PUNC")) {W_PUNC = temp.substr(temp.find(":")+1);}
+        if(string::npos !=temp.find("R_PUNC")) {R_PUNC = temp.substr(start,temp.size()- start - 1);}
+        if(string::npos !=temp.find("S_PUNC")) {S_PUNC = temp.substr(start,temp.size()- start - 1);}
+        if(string::npos !=temp.find("W_PUNC")) {W_PUNC = temp.substr(start,temp.size()- start - 1);}
 
-        if(string::npos !=temp.find("window_length_in_ms"))  {window_length_in_ms = stoi(temp.substr(temp.find(":")+1));}
-        if(string::npos !=temp.find("max_join_delay_in_ms")) {max_join_delay_in_ms = stoi(temp.substr(temp.find(":")+1));}
-        if(string::npos !=temp.find("test_time_in_ms"))      {test_time_in_ms = stoi(temp.substr(temp.find(":")+1));}
-        if(string::npos !=temp.find("add_speed_step"))       {add_speed_step = stoi(temp.substr(temp.find(":")+1));}
+        if(string::npos !=temp.find("window_length_in_ms"))  {window_length_in_ms = stoi(temp.substr(start));}
+        if(string::npos !=temp.find("max_join_delay_in_ms")) {max_join_delay_in_ms = stoi(temp.substr(start));}
+        if(string::npos !=temp.find("test_time_in_ms"))      {test_time_in_ms = stoi(temp.substr(start));}
+        if(string::npos !=temp.find("add_speed_step"))       {add_speed_step = stoi(temp.substr(start));}
 
-        if(string::npos !=temp.find("default_source_speed")) {default_source_speed = stoi(temp.substr(temp.find(":")+1));}
-        if(string::npos !=temp.find("max_source_speed"))     {max_source_speed = stoi(temp.substr(temp.find(":")+1));}
-        if(string::npos !=temp.find("r_ratio"))              {r_ratio = stoi(temp.substr(temp.find(":")+1));}
-        if(string::npos !=temp.find("s_ratio"))              {s_ratio = stoi(temp.substr(temp.find(":")+1));}
+        if(string::npos !=temp.find("default_source_speed")) {default_source_speed = stoi(temp.substr(start));}
+        if(string::npos !=temp.find("max_source_speed"))     {max_source_speed = stoi(temp.substr(start));}
+        if(string::npos !=temp.find("r_ratio"))              {r_ratio = stoi(temp.substr(start));}
+        if(string::npos !=temp.find("s_ratio"))              {s_ratio = stoi(temp.substr(start));}
         if(string::npos !=temp.find("order_preserving"))     {ctrl_order_preserving = true;}
         if(string::npos !=temp.find("post_result_tuple"))    {ctrl_output_result_tuple = true;}
         if(string::npos !=temp.find("post_result_ts"))       {ctrl_output_result_ts = true;}
