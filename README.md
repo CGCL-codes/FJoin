@@ -46,7 +46,11 @@ https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/vhc1571429852245.html
 ## Build Project
 After running Vitis, please set up a workspace, and then import the project from the zip file in the /proj directory. All source code and project configuration are included in it.
 
-After that, select the "Hardware" target in the left down corner, and press the hammer button to build it. Please wait patiently for hours. The sample project is set to each join pipeline contains 32 basic join units, including a total of 64 units. Generally, the building time will not be too long.  
+After that, select the "Hardware" target in the left down corner, and press the hammer button to build it. Please wait patiently for hours. The sample project is set to each join pipeline contains 16 basic join units, including a total of 32 units. Generally, the building time will not be too long.  
+
+After building, you also need to prepare datasets and configuration files before running.
+Dataset: Download the data files(gps_0102, gps_0304) from the /data, and put them into /src/data of the project.
+Configuration file: Copy the run configuration file(run.cfg) in the /src to the Vitis running directory /Hardware/join_hw-Default
 
 After running, the result will be written to the files in the /result directory, and the console will have corresponding output.
 
