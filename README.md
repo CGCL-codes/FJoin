@@ -129,7 +129,7 @@ It should be noted that the two R/S join pipelines are independent and need to b
 
 The JoinCore corresponding to the ip data set can be found in /krnl, and the file name is <ip_equal.v>
 
-## Configure FJoin join pipeline
+## Configure FJoin Join Pipeline
 
 ### Number of Stages
 
