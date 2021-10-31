@@ -57,53 +57,53 @@ using namespace std;
 
 ////////////////// CUSTOM HEAD ////////////////////////
 ////需要自定义的结构
-//struct RTuple{
-//    unsigned int latitude = 0;
-//    unsigned int longtitude = 0;
-//    long long timestamp = 0;
-//    unsigned int zero[16 - 4] = {0};
-//};
-//struct STuple{
-//    unsigned int latitude = 0;
-//    unsigned int longtitude = 0;
-//    long long timestamp = 0;
-//    unsigned int zero[16 - 4] = {0};
-//};
-//
-//struct ResultTuple{
-//    unsigned int window_latitude = 0;
-//    unsigned int window_longtitude = 0;
-//    long long window_timestamp = 0;
-//    unsigned int stream_latitude = 0;
-//    unsigned int stream_longtitude = 0;
-//    long long stream_timestamp = 0;
-//    unsigned int zero[16 - 8] = {0};
-//};
+struct RTuple{
+   unsigned int latitude = 0;
+   unsigned int longtitude = 0;
+   long long timestamp = 0;
+   unsigned int zero[16 - 4] = {0};
+};
+struct STuple{
+   unsigned int latitude = 0;
+   unsigned int longtitude = 0;
+   long long timestamp = 0;
+   unsigned int zero[16 - 4] = {0};
+};
+
+struct ResultTuple{
+   unsigned int window_latitude = 0;
+   unsigned int window_longtitude = 0;
+   long long window_timestamp = 0;
+   unsigned int stream_latitude = 0;
+   unsigned int stream_longtitude = 0;
+   long long stream_timestamp = 0;
+   unsigned int zero[16 - 8] = {0};
+};
 
 
  //需要自定义的结构
- struct RTuple{
-     unsigned int des = 0;
-     unsigned int src = 0;
-     long long timestamp = 0;
-     unsigned int zero[16 - 4] = {0};
- };
- struct STuple{
-     unsigned int des = 0;
-     unsigned int src = 0;
-     long long timestamp = 0;
-     unsigned int zero[16 - 4] = {0};
- };
+ // struct RTuple{
+ //     unsigned int des = 0;
+ //     unsigned int src = 0;
+ //     long long timestamp = 0;
+ //     unsigned int zero[16 - 4] = {0};
+ // };
+ // struct STuple{
+ //     unsigned int des = 0;
+ //     unsigned int src = 0;
+ //     long long timestamp = 0;
+ //     unsigned int zero[16 - 4] = {0};
+ // };
 
- struct ResultTuple{
-     unsigned int window_des = 0;
-     unsigned int window_src = 0;
-     long long window_timestamp = 0;
-     unsigned int stream_des = 0;
-     unsigned int stream_src = 0;
-     long long stream_timestamp = 0;
-     unsigned int zero[16 - 8] = {0};
- };
+ // struct ResultTuple{
+ //     unsigned int window_des = 0;
+ //     unsigned int window_src = 0;
+ //     long long window_timestamp = 0;
+ //     unsigned int stream_des = 0;
+ //     unsigned int stream_src = 0;
+ //     long long stream_timestamp = 0;
+ //     unsigned int zero[16 - 8] = {0};
+ // };
 
 ///////////////////////////////////////////////////////////
 struct Line
