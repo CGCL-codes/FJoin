@@ -64,16 +64,22 @@ FJoin is a framework designed for general stream join predicates. It can change 
 
 The system runtime parameters are concentrated in the configuration file <run.cfg>. After starting, FJoin will read the contents of this file to set runtime parameters. Some configuration items must be provided, and others can be default.
 
-### Parameters that must be set in <run.cfg>
-Datasets Definitions
-R_NAME/R_DATA/S_NAME/S_DATA/W_NAME respectively specify R stream name/R stream data source file/S stream name/S stream data source file/result file. 
+### Parameters that must be set in <run.cfg>:
+### Datasets Definitions
+
+R_NAME/R_DATA/S_NAME/S_DATA/W_NAME respectively specify R stream name/R stream data source file/S stream name/S stream data source file/result file
+
 These names or file default values are empty, must be set correctly.
-R_PUNC/S_PUNC/W_PUNC respectively specify the data item separator of each line of the source/result file. 
+
+R_PUNC/S_PUNC/W_PUNC respectively specify the data item separator of each line of the source/result file
+
 The default separators are empty, must be set according to the data file format.
 
-### Parameters that have default values
+### Parameters that have default values:
 (Only the parameter settings before the end line are valid.)
-Runtime Parameters
+
+### Runtime Parameters
+
 window_length_in_ms sliding window size(in milliseconds)
 max_join_delay_in_ms    maximum join calculation latency(in milliseconds)
 test_time_in_ms total running time (in milliseconds)
@@ -83,7 +89,9 @@ r_ratio R stream ratio
 s_ratio S stream ratio
 add_speed_step  the acceleration of the stream rate per second
 
-Runtime Configuration Items
+
+### Runtime Configuration Items
+
 post_result_ts  output result timestamp
 post_result_delay   output result latency
 post_result_tuple   output join result tuple
@@ -122,7 +130,9 @@ It should be noted that the two R/S join pipelines are independent and need to b
 The JoinCore corresponding to the ip data set can be found in /krnl, and the file name is <ip_equal.v>
 
 ## Configure FJoin join pipeline
-Number of Stages
+
+### Number of Stages
+
 FJoin can easily configure the number of stages of the stream_r_join and stream_s_join join pipeline to change the system scale. The PARA_PIPELINE_STAGE_NUMS parameter in the <para.v> file defines the pipeline depth.
 
 ## Adapt to Different Devices
