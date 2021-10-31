@@ -58,6 +58,78 @@ After running, the result will be written to the files in the /result directory,
 
 # Project Configuration
 
+FJoin is a framework designed for general stream join predicates. It can change the RTL kernel design of join predicate to accelerate different calculations. It can also configure runtime parameters to study the performance of the system under different settings.
+
+## Runtime Parameters
+
+The system runtime parameters are concentrated in the configuration file <run.cfg>. After starting, FJoin will read the contents of this file to set runtime parameters. Some configuration items must be provided, and others can be default.
+
+### Parameters that must be set in <run.cfg>
+Datasets Definitions
+R_NAME/R_DATA/S_NAME/S_DATA/W_NAME respectively specify R stream name/R stream data source file/S stream name/S stream data source file/result file. 
+These names or file default values are empty, must be set correctly.
+R_PUNC/S_PUNC/W_PUNC respectively specify the data item separator of each line of the source/result file. 
+The default separators are empty, must be set according to the data file format.
+
+### Parameters that have default values
+(Only the parameter settings before the end line are valid.)
+Runtime Parameters
+window_length_in_ms sliding window size(in milliseconds)
+max_join_delay_in_ms    maximum join calculation latency(in milliseconds)
+test_time_in_ms total running time (in milliseconds)
+default_source_speed    default initial stream rate(sum of R and S)
+max_source_speed    maximum stream rate(sum of R and S)
+r_ratio R stream ratio
+s_ratio S stream ratio
+add_speed_step  the acceleration of the stream rate per second
+
+Runtime Configuration Items
+post_result_ts  output result timestamp
+post_result_delay   output result latency
+post_result_tuple   output join result tuple
+add_speed_test stream rate increase test
+order_preserving    output order preserving result
+
+## Join Predicate
+
+FJoin can also change the join predicate to accelerate different join calculations, but it needs to provide the RTL kernel of the join predicate. 
+
+Compared with the switch of runtime parameters, the replacement of the join predicate definition is more complicated, but fortunately this happens less frequently.
+
+The following example shows how to change the join predicate of FJoin by replacing the join predicate of the didi data set with the join predicate of the ip data set.
+
+### Change Tuple Definitions
+
+1. Modify the definition of the stream tuples of R/S/Result. 
+
+Their definitions are in the -CUSTOM HEAD- section of <head.hpp>. Both the source code and the /proj sample project use the definition of the didi data set. Under that is the definition of the ip data set(Annotated), annotate the tuple definition of the didi data set, uncomment the tuple definition of the ip data set, and complete the modification of the tuple definition. For simplicity, FJoin fixs tuple size of 64 bytes, and the part of the tuple definition that is not satisfied needs to be filled with 0.
+
+2. Replace the functions that parse the data lines. 
+
+The functions are in the <custom.cpp> file. The definition of the Line structure is in the <head.hpp> file. Three methods are provided to the system to convert the Line records read from the stream source to R/S tuple format, and to convert back the Result tuple to the Line structure.
+
+3. Modify the paths of the data source files. 
+
+They are in the <run.cfg> file. When FJoin is running, it needs to read the corresponding files to form data streams.
+
+### Change the RTL core of the join predicate
+
+The join core is defined as the JoinCore module in FJoin .
+In the Vitis, double-click the two .xo files in /src/vitis_rtl_kernel to enter the project of the RTL kernel for editing. FJoin defines the JoinCore module in a separate .v file. For example, the JoinCore corresponding to the didi data set is in the file <didi_Manhattan_Distance.v>. By removing the current JoinCore definition file from the project, and re-adding the prepared JoinCore module, the RTL core can be replaced.
+
+It should be noted that the two R/S join pipelines are independent and need to be replaced twice, which facilitates the use of asymmetric join core designs.
+
+The JoinCore corresponding to the ip data set can be found in /krnl, and the file name is <ip_equal.v>
+
+## Configure FJoin join pipeline
+Number of Stages
+FJoin can easily configure the number of stages of the stream_r_join and stream_s_join join pipeline to change the system scale. The PARA_PIPELINE_STAGE_NUMS parameter in the <para.v> file defines the pipeline depth.
+
+## Adapt to Different Devices
+The example project is designed for Xilinx Alveo U280 FPGA accelerator card. Modify the project settings to adapt to different accelerator device. The <link.cfg> file defines the implementation of the RTL kernel on the FPGA accelerator device. Please refer to the device manual for setting.
+
+Note that each join pipeline needs to allocate an independent memory bank. For example, the two AXI buses of stream_r_join_1 in the example are connected to the DDR[0] memory bank, while stream_s_join is connected to the DDR[1]. At the same time, the depth of the join pipeline cannot exceed the number of FPGA resources, otherwise the synthesis will fail.
+
 # Evaluation Result
 <img src="https://github.com/CGCL-codes/FJoin/blob/main/images/FJoin_img_evaluation.PNG" alt="FJoin_img_evaluation"/><br/>
 The direct manifestation of the processing capacity of the stream join system is the number of join calculations completed per unit of time. The picture on the left is a real-time comparison of the number of join calculations completed per second between FJoin and the distributed stream join system BiStream. We use the data set of Didi Chuxing and the corresponding join predicate, the sliding time window size is set to 180 seconds. The results show that FJoin with 1024 basic join units can complete more than 100 billion join predicate calculations per second. However, BiStream which runs in a 40-node cluster with 512 CPUs completes join predicate calculations about 6 billion times per second. From the perspective of connection predicate calculations, FJoin achieves a speedup of about 17.  
